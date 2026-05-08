@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Route /api/news to the Netlify Serverless Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+# Route everything else to index.html (React SPA fallback)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
