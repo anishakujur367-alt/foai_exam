@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-  const apiKey = process.env.NEWS_API_KEY;
+  const apiKey = process.env.NEWS_API_KEY || process.env.VITE_NEWS_API_KEY;
 
   if (!apiKey) {
     return res.status(500).json({
