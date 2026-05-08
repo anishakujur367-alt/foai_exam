@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-const API_KEY  = import.meta.env.VITE_NEWS_API_KEY;
-const NEWS_URL = `https://newsapi.org/v2/top-headlines?language=en&pageSize=30&apiKey=${API_KEY}`;
+const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+
+// NewsAPI free plan blocks browser requests from non-localhost origins.
+// Use a CORS proxy when deployed so the request succeeds everywhere.
+const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const BASE_URL  = `https://newsapi.org/v2/top-headlines?language=en&pageSize=30&apiKey=${API_KEY}`;
+const CORS_PROXY = 'https://corsproxy.io/?';
+const NEWS_URL  = isLocalhost ? BASE_URL : `${CORS_PROXY}${encodeURIComponent(BASE_URL)}`;
 
 /* ── Helpers ──────────────────────────────────────────────── */
 function formatDate(iso) {
